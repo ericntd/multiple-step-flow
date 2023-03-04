@@ -28,8 +28,7 @@ class MainActivity : AppCompatActivity(), FlowNagivation {
 
     private fun renderStep(i: Int) {
         Log.w("MainActivity", "renderStep $i")
-        val step = steps[i]
-        when (step) {
+        when (steps[i]) {
             "a" -> {
                 val inputA = InputA("some data");
                 val fragA = StepAFragment.newInstance(inputA)
@@ -43,13 +42,30 @@ class MainActivity : AppCompatActivity(), FlowNagivation {
         }
     }
 
-    override fun goNext() {
+    override fun goNext(outputA: OutputA) {
+        /*
+         process output A
+         */
+        println(outputA)
+        goToNextStep()
+    }
+
+    private fun goToNextStep() {
         currentStep++
         if (currentStep<steps.size) {
             renderStep(currentStep)
         } else {
+            println("flow completed")
             findViewById<View>(R.id.done).visibility = View.VISIBLE
             findViewById<View>(R.id.fragment_container).visibility = View.GONE
         }
+    }
+
+    override fun goNext(outputB: OutputB) {
+        /*
+         process output B
+         */
+        println(outputB)
+        goToNextStep()
     }
 }
